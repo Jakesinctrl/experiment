@@ -1,0 +1,19 @@
+{
+  "name": "medical-information-management-system",
+  "version": "1.0.0",
+  "description": "School Clinic Medical Information Management System",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.6.2",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "express": "^4.22.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  }
+}

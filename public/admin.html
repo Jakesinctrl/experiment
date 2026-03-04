@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MIMS — Admin Portal</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="page-topbar" role="banner">
+        <div class="logo-text">🏥 MIMS — <span>Admin Portal</span></div>
+        <div class="user-info">School Nurse / Admin</div>
+    </header>
+    <div class="portal-wrapper">
+        <aside class="sidebar" role="navigation" aria-label="Admin navigation">
+            <nav class="sidebar-nav">
+                <button class="nav-item active" data-section="patient" onclick="showSection('patient')" aria-label="Patients">
+                    <span class="nav-icon" aria-hidden="true">👤</span> Patient
+                </button>
+                <button class="nav-item" data-section="appointment" onclick="showSection('appointment')" aria-label="Appointments inbox">
+                    <span class="nav-icon" aria-hidden="true">📬</span> Appointment
+                    <span id="pendingBadge" style="margin-left:auto; background:var(--gold); color:var(--text-dark); font-size:0.7rem; font-weight:700; padding:2px 7px; border-radius:10px; display:none;">0</span>
+                </button>
+                <button class="nav-item" data-section="record" onclick="showSection('record')" aria-label="Medical records">
+                    <span class="nav-icon" aria-hidden="true">🗂️</span> Record
+                </button>
+                <button class="nav-item" data-section="waitlist" onclick="showSection('waitlist')" aria-label="Waitlist">
+                    <span class="nav-icon" aria-hidden="true">⏳</span> Waitlist
+                </button>
+                <button class="nav-item" data-section="feedback" onclick="showSection('feedback')" aria-label="Feedback messages">
+                    <span class="nav-icon" aria-hidden="true">💬</span> Feedback Form
+                </button>
+                <div class="sidebar-divider" aria-hidden="true"></div>
+                <button class="nav-item" onclick="logout()" aria-label="Log Out">
+                    <span class="nav-icon" aria-hidden="true">🚪</span> Log Out
+                </button>
+            </nav>
+        </aside>
+        <main class="main-content" role="main">
+            <section id="section-patient" class="portal-section active" aria-labelledby="patient-heading">
+                <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom:20px;">
+                    <div>
+                        <h2 style="font-size:1.3rem; color:var(--green-dark); font-weight:800;" id="patient-heading">👤 Patients</h2>
+                        <p style="font-size:0.85rem; color:var(--text-muted);">Manage patient health profiles. Up to 50 patients.</p>
+                    </div>
+                    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                        <input type="text" id="patientSearch" placeholder="🔍 Search patients…" style="padding:9px 14px; border:1.5px solid var(--green-border); border-radius:6px; font-family:inherit; min-width:220px;" oninput="filterPatients(this.value)">
+                        <button class="btn btn-primary" onclick="openAddPatientModal()">+ Add Patient</button>
+                    </div>
+                </div>
+                <div class="stats-row" id="patientStats"></div>
+                <div class="patient-grid" id="patientGrid">
+                    <p style="color:var(--text-muted); grid-column:1/-1; padding:30px; text-align:center;">Loading patients…</p>
+                </div>
+            </section>
+            <section id="section-appointment" class="portal-section" aria-labelledby="inbox-heading">
+                <div class="section-card">
+                    <h2 id="inbox-heading">📬 Appointment Inbox</h2>
+                    <p class="section-subtitle">Appointment requests submitted by students appear here. Review and approve or reject each one.</p>
+                    <div style="overflow-x: auto;">
+                        <table class="data-table" aria-label="Appointment inbox">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Student Name</th>
+                                    <th>Grade</th>
+                                    <th>LRN</th>
+                                    <th>Service Type</th>
+                                    <th>Description</th>
+                                    <th>Submitted</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="appointmentsBody">
+                                <tr>
+                                    <td colspan="9" style="text-align:center; color:var(--text-muted); padding:30px;">Loading…</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+            <section id="section-record" class="portal-section" aria-labelledby="record-heading">
+                <div id="recordsGridView">
+                    <div class="records-toolbar">
+                        <div>
+                            <h2 style="font-size:1.3rem; color:var(--green-dark); font-weight:800;" id="record-heading">🗂️ Medical Records</h2>
+                            <p style="font-size:0.85rem; color:var(--text-muted);">Click a file to open and edit. Right-click the × to delete.</p>
+                        </div>
+                        <button class="btn btn-primary" onclick="createNewRecord()">
+                            📄 Create New Record
+                        </button>
+                    </div>
+                    <div class="records-grid" id="recordsGrid">
+                        <p style="color:var(--text-muted); grid-column:1/-1;">Loading records…</p>
+                    </div>
+                </div>
+                <div id="recordEditorView" class="hidden">
+                    <div class="record-editor">
+                        <div class="editor-toolbar">
+                            <div style="display:flex; align-items:center; gap:14px;">
+                                <button class="btn btn-outline btn-sm" onclick="closeEditor()">← Back</button>
+                                <input type="text" id="editorTitle" class="editor-title-input" value="Untitled Record" aria-label="Record title">
+                            </div>
+                            <div class="editor-actions">
+                                <button class="btn btn-primary btn-sm" onclick="saveRecord()">💾 Save</button>
+                                <button class="btn btn-danger btn-sm" onclick="deleteCurrentRecord()">🗑 Delete</button>
+                            </div>
+                        </div>
+                        <textarea id="editorTextarea" placeholder="Start typing medical notes here…" aria-label="Medical record content"></textarea>
+                    </div>
+                </div>
+            </section>
+            <section id="section-waitlist" class="portal-section" aria-labelledby="waitlist-heading">
+                <div class="section-card">
+                    <h2 id="waitlist-heading">⏳ Waitlist</h2>
+                    <p class="section-subtitle">Appointments that have been approved automatically appear here in the waitlist queue.</p>
+                    <div style="overflow-x: auto;">
+                        <table class="data-table" aria-label="Approved appointments waitlist">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Student Name</th>
+                                    <th>Grade</th>
+                                    <th>LRN</th>
+                                    <th>Service Type</th>
+                                    <th>Description</th>
+                                    <th>Approved Date</th>
+                                </tr>
+                            </thead>
+                            <tbody id="waitlistBody">
+                                <tr>
+                                    <td colspan="7" style="text-align:center; color:var(--text-muted); padding:30px;">Loading…</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+            <section id="section-feedback" class="portal-section" aria-labelledby="feedback-heading">
+                <div class="section-card">
+                    <h2 id="feedback-heading">💬 Feedback & Comments</h2>
+                    <p class="section-subtitle">Messages submitted by students via the Student Portal's "Comment" section appear here.</p>
+                    <div style="overflow-x: auto;">
+                        <table class="data-table" aria-label="Student feedback messages">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Message</th>
+                                    <th>Date Received</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="feedbackBody">
+                                <tr>
+                                    <td colspan="4" style="text-align:center; color:var(--text-muted); padding:30px;">Loading…</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <div id="patientModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="patientModalTitle">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closePatientModal()" aria-label="Close patient modal">✕</button>
+            <h2 id="patientModalTitle">Add Patient</h2>
+            <form id="patientForm" onsubmit="savePatient(event)" novalidate>
+                <input type="hidden" id="patientId">
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:0 16px;">
+                    <div class="form-group" style="grid-column:1/-1;">
+                        <label for="pFullName">Full Name *</label>
+                        <input type="text" id="pFullName" placeholder="Full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pLrn">LRN *</label>
+                        <input type="text" id="pLrn" placeholder="12-digit LRN" maxlength="14" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pGrade">Grade & Section</label>
+                        <input type="text" id="pGrade" placeholder="e.g. 12 ICT - THALES">
+                    </div>
+                    <div class="form-group">
+                        <label for="pHeight">Height</label>
+                        <input type="text" id="pHeight" placeholder="e.g. 165cm">
+                    </div>
+                    <div class="form-group">
+                        <label for="pWeight">Weight</label>
+                        <input type="text" id="pWeight" placeholder="e.g. 60kg">
+                    </div>
+                    <div class="form-group">
+                        <label for="pBmi">BMI Status</label>
+                        <select id="pBmi">
+                            <option value="Normal">Normal</option>
+                            <option value="Underweight">Underweight</option>
+                            <option value="Overweight">Overweight</option>
+                            <option value="Obese">Obese</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="pHistory">Medical History</label>
+                        <input type="text" id="pHistory" placeholder="e.g. Asthma, None">
+                    </div>
+                    <div class="form-group">
+                        <label for="pExposure">Clinic Exposure</label>
+                        <input type="text" id="pExposure" placeholder="e.g. None / Yes — 3 times">
+                    </div>
+                </div>
+                <p style="font-size:0.78rem; color:var(--text-muted); margin-bottom:10px; font-style:italic;">
+                    🔒 Sensitive fields below — leave blank unless explicitly required.
+                </p>
+                <div class="form-group">
+                    <label for="pEmail">Email Address</label>
+                    <input type="email" id="pEmail" placeholder="Optional">
+                </div>
+                <div class="form-group">
+                    <label for="pAddress">Home Address</label>
+                    <input type="text" id="pAddress" placeholder="Optional">
+                </div>
+                <div class="form-group">
+                    <label for="pContact">Contact No.</label>
+                    <input type="text" id="pContact" placeholder="Optional">
+                </div>
+                <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:6px;">
+                    <button type="button" class="btn btn-outline" onclick="closePatientModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Patient</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="toast" role="status" aria-live="polite"></div>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>

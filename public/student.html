@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MIMS — Student Portal</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="page-topbar" role="banner">
+    <div class="logo-text">🏥 MIMS — <span>Student Portal</span></div>
+    <div class="user-info" id="studentGreeting">Welcome, Student</div>
+  </header>
+  <div class="portal-wrapper">
+    <aside class="sidebar" role="navigation" aria-label="Student navigation">
+      <nav class="sidebar-nav">
+        <button class="nav-item active"
+                data-section="appointments"
+                onclick="showSection('appointments')"
+                aria-label="My Appointments">
+          <span class="nav-icon" aria-hidden="true">📅</span>
+          My Appointments
+        </button>
+        <button class="nav-item"
+                data-section="request"
+                onclick="showSection('request')"
+                aria-label="Request Appointment">
+          <span class="nav-icon" aria-hidden="true">📝</span>
+          Request Appointment
+        </button>
+        <button class="nav-item"
+                data-section="announcements"
+                onclick="showSection('announcements')"
+                aria-label="Announcements">
+          <span class="nav-icon" aria-hidden="true">📢</span>
+          Announcements
+        </button>
+
+        <button class="nav-item"
+                data-section="comment"
+                onclick="showSection('comment')"
+                aria-label="Leave a comment">
+          <span class="nav-icon" aria-hidden="true">💬</span>
+          Comment
+        </button>
+        <div class="sidebar-divider" aria-hidden="true"></div>
+
+        <button class="nav-item"
+                onclick="logout()"
+                aria-label="Log Out">
+          <span class="nav-icon" aria-hidden="true">🚪</span>
+          Log Out
+        </button>
+
+      </nav>
+    </aside>
+    <main class="main-content" role="main">
+      <section id="section-appointments" class="portal-section active" aria-labelledby="appt-heading">
+
+        <div class="section-card">
+          <h2 id="appt-heading">📅 My Appointments</h2>
+          <p class="section-subtitle">Track the status of your submitted appointment requests below.</p>
+          <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:18px; align-items:center;">
+            <label for="filterName" style="font-weight:600; font-size:0.875rem;">Search by name:</label>
+            <input type="text"
+                   id="filterName"
+                   placeholder="Your full name… (optional)"
+                   style="padding:8px 12px; border:1.5px solid var(--green-border); border-radius:6px; flex:1; min-width:200px; max-width:360px; font-family:inherit;"
+                   oninput="loadStudentAppointments(this.value)">
+            <button class="btn btn-primary btn-sm" onclick="loadStudentAppointments(document.getElementById('filterName').value)">
+              🔍 Search
+            </button>
+          </div>
+          <div style="overflow-x: auto;">
+            <table class="data-table" aria-label="My appointment requests">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Service Type</th>
+                  <th>Grade</th>
+                  <th>LRN</th>
+                  <th>Description</th>
+                  <th>Date Submitted</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="studentAppointmentsBody">
+                <tr>
+                  <td colspan="7" style="text-align:center; color:var(--text-muted); padding:30px;">
+                    Enter your name above and click Search to view your appointments.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </section>
+      <section id="section-request" class="portal-section" aria-labelledby="req-heading">
+
+        <div class="section-card">
+          <h2 id="req-heading">📝 Request an Appointment</h2>
+          <p class="section-subtitle">Fill in the form below to request a clinic appointment. The admin will review and approve it.</p>
+          <form id="appointmentForm"
+                onsubmit="submitAppointment(event)"
+                novalidate
+                style="max-width: 600px;">
+            <div class="form-group">
+              <label for="serviceType">Type of Clinic Service <span style="color:var(--danger)">*</span></label>
+              <select id="serviceType" name="service_type" required>
+                <option value="" disabled selected>— Select a service —</option>
+                <option value="First Aid & Medication">First Aid &amp; Medication</option>
+                <option value="Health Monitoring">Health Monitoring (Height/Weight/BMI)</option>
+                <option value="Medical Consultation">Medical Consultation</option>
+                <option value="Dental Referral">Dental Referral</option>
+                <option value="Mental Health Support">Mental Health Support</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="studentName">Full Name <span style="color:var(--danger)">*</span></label>
+              <input type="text"
+                     id="studentName"
+                     name="student_name"
+                     placeholder="e.g. Juan Dela Cruz"
+                     autocomplete="name"
+                     required>
+            </div>
+            <div class="form-group">
+              <label for="studentGrade">Grade &amp; Section <span style="color:var(--danger)">*</span></label>
+              <input type="text"
+                     id="studentGrade"
+                     name="grade"
+                     placeholder="e.g. 12 ICT - THALES"
+                     required>
+            </div>
+            <div class="form-group">
+              <label for="studentLrn">LRN (Learner Reference Number) <span style="color:var(--danger)">*</span></label>
+              <input type="text"
+                     id="studentLrn"
+                     name="lrn"
+                     placeholder="12-digit LRN"
+                     maxlength="12"
+                     required>
+            </div>
+            <div class="form-group">
+              <label for="apptDescription">Description of Appointment <span style="color:var(--danger)">*</span></label>
+              <textarea id="apptDescription"
+                        name="description"
+                        placeholder="Briefly describe your concern or reason for the visit…"
+                        rows="5"
+                        required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">
+              📨 Submit Request
+            </button>
+
+          </form>
+        </div>
+
+      </section>
+      <section id="section-announcements" class="portal-section" aria-labelledby="ann-heading">
+
+        <div class="section-card">
+          <h2 id="ann-heading">📢 Announcements</h2>
+          <p class="section-subtitle">Latest updates and notices from the school clinic.</p>
+
+          <article class="announcement-card">
+            <div class="ann-date">📅 March 2026</div>
+            <h3>Annual Physical Examination Schedule</h3>
+            <p>The Annual Physical Examination for Grade 12 students will be conducted during the first week of March. Please bring your health booklet and consent form.</p>
+          </article>
+
+          <article class="announcement-card">
+            <div class="ann-date">📅 February 2026</div>
+            <h3>Dengue Prevention Campaign</h3>
+            <p>The school clinic is reminding all students to wear mosquito repellent and eliminate standing water around the campus to prevent dengue cases.</p>
+          </article>
+
+          <article class="announcement-card">
+            <div class="ann-date">📅 January 2026</div>
+            <h3>Clinic Operating Hours Update</h3>
+            <p>Starting January 2026, the clinic will now be open from 7:00 AM to 4:00 PM on weekdays. No Saturday operations.</p>
+          </article>
+        </div>
+
+      </section>
+      <section id="section-comment" class="portal-section" aria-labelledby="comment-heading">
+
+        <div class="section-card">
+          <h2 id="comment-heading">💬 Leave a Comment or Feedback</h2>
+          <p class="section-subtitle">Share your thoughts, suggestions, or concerns about the clinic. Your feedback is anonymous.</p>
+
+          <form id="feedbackForm"
+                onsubmit="submitFeedback(event)"
+                novalidate
+                style="max-width: 600px;">
+
+            <div class="form-group">
+              <label for="feedbackMessage">Your Message <span style="color:var(--danger)">*</span></label>
+              <textarea id="feedbackMessage"
+                        name="message"
+                        placeholder="Type your feedback, suggestion, or concern here…"
+                        rows="7"
+                        required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+              📤 Send Feedback
+            </button>
+
+          </form>
+        </div>
+
+      </section>
+
+    </main>
+  </div>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script src="/js/student.js"></script>
+
+</body>
+</html>

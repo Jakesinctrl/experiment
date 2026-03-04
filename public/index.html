@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MIMS — School Clinic</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="landing-header" role="banner">
+        <div class="landing-logo">
+            <div class="logo-icon" aria-hidden="true">🏥</div>
+            <div>
+                <div class="logo-title">MIMS</div>
+                <div class="logo-sub">Medical Information Management System</div>
+            </div>
+        </div>
+        <nav class="landing-nav" aria-label="Main Navigation">
+            <a href="#services" aria-label="View services">Services</a>
+            <a href="#announcements" aria-label="View announcements">Announcements</a>
+            <a href="#" class="nav-login" id="openLoginBtn" role="button" aria-label="Open login" onclick="openLoginModal(); return false;">Login</a>
+        </nav>
+    </header>
+
+    <section class="slideshow-section" aria-label="Hero Slideshow">
+        <div class="slide slide-1 active" role="img" aria-label="Slide 1: Your Health, Our Priority">
+            <div class="slide-bg"></div>
+            <div class="slide-decoration"></div>
+            <div class="slide-content">
+                <span class="slide-tag">School Health Services</span>
+                <h1>Your Health,<br>Our Priority</h1>
+                <p>Providing compassionate, quality healthcare for every student in our school community.</p>
+            </div>
+        </div>
+        <div class="slide slide-2" role="img" aria-label="Slide 2: Accessible Clinic Services">
+            <div class="slide-bg"></div>
+            <div class="slide-decoration"></div>
+            <div class="slide-content">
+                <span class="slide-tag">Easy Appointments</span>
+                <h1>Accessible<br>Clinic Services</h1>
+                <p>Request appointments online and track your health records all in one place.</p>
+            </div>
+        </div>
+        <div class="slide slide-3" role="img" aria-label="Slide 3: A Healthier School Community">
+            <div class="slide-bg"></div>
+            <div class="slide-decoration"></div>
+            <div class="slide-content">
+                <span class="slide-tag">12 ICT — THALES</span>
+                <h1>A Healthier<br>School Community</h1>
+                <p>Monitoring wellness and maintaining health records for all our students with care and efficiency.</p>
+            </div>
+        </div>
+        <div class="slide-dots" role="tablist" aria-label="Slide navigation">
+            <button class="dot active" role="tab" aria-selected="true" aria-label="Slide 1" onclick="goToSlide(0)"></button>
+            <button class="dot" role="tab" aria-selected="false" aria-label="Slide 2" onclick="goToSlide(1)"></button>
+            <button class="dot" role="tab" aria-selected="false" aria-label="Slide 3" onclick="goToSlide(2)"></button>
+        </div>
+    </section>
+
+    <main class="landing-body">
+        <section id="about" aria-labelledby="about-heading">
+            <h2 class="landing-section-title" id="about-heading">About the Clinic</h2>
+            <div class="landing-section-line" aria-hidden="true"></div>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p>Our school clinic is dedicated to promoting the health and wellness of every student. We provide a safe, caring environment where students can receive immediate medical attention, wellness monitoring, and guidance on healthy living.</p>
+                    <p>Through our Medical Information Management System (MIMS), students can now request appointments digitally, and clinic staff can manage health records more effectively than ever before.</p>
+                </div>
+                <div class="about-info-card">
+                    <h3>📋 Clinic Information</h3>
+                    <div class="info-item"><span class="info-icon">🕐</span><span><strong>Operating Hours:</strong><br>Monday – Friday, 7:00 AM – 4:00 PM</span></div>
+                    <div class="info-item"><span class="info-icon">📍</span><span><strong>Location:</strong><br>Main Building, Ground Floor</span></div>
+                    <div class="info-item"><span class="info-icon">👩‍⚕️</span><span><strong>Staff:</strong><br>School Nurse &amp; Health Aide</span></div>
+                    <div class="info-item"><span class="info-icon">🚑</span><span><strong>Emergency:</strong><br>Contact the clinic or nearby barangay health center.</span></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" aria-labelledby="services-heading">
+            <h2 class="landing-section-title" id="services-heading">Clinic Services</h2>
+            <div class="landing-section-line" aria-hidden="true"></div>
+            <div class="services-grid">
+                <article class="service-card"><div class="service-icon">💊</div><h3>First Aid & Medication</h3><p>Immediate care for minor injuries, wounds, headaches, fever, and other acute concerns.</p></article>
+                <article class="service-card"><div class="service-icon">📏</div><h3>Health Monitoring</h3><p>Regular height, weight, and BMI assessments to track student wellness and growth.</p></article>
+                <article class="service-card"><div class="service-icon">🧠</div><h3>Mental Health Support</h3><p>Guidance and referrals for students experiencing stress, anxiety, or emotional difficulties.</p></article>
+                <article class="service-card"><div class="service-icon">📋</div><h3>Medical Records</h3><p>Maintenance of student health records including history, exposures, and clinic visits.</p></article>
+            </div>
+        </section>
+
+        <section id="announcements" style="margin-top: 60px;" aria-labelledby="ann-heading">
+            <h2 class="landing-section-title" id="ann-heading">Announcements</h2>
+            <div class="landing-section-line" aria-hidden="true"></div>
+            <article class="announcement-card">
+                <div class="ann-date">📅 March 2026</div>
+                <h3>Annual Physical Examination Schedule</h3>
+                <p>The Annual Physical Examination for Grade 12 students will be conducted during the first week of March. Please bring your health booklet and consent form.</p>
+            </article>
+            <article class="announcement-card">
+                <div class="ann-date">📅 February 2026</div>
+                <h3>Dengue Prevention Campaign</h3>
+                <p>The school clinic is reminding all students to wear mosquito repellent and eliminate standing water around the campus to prevent dengue cases.</p>
+            </article>
+            <article class="announcement-card">
+                <div class="ann-date">📅 January 2026</div>
+                <h3>Clinic Operating Hours Update</h3>
+                <p>Starting January 2026, the clinic will now be open from 7:00 AM to 4:00 PM on weekdays. No Saturday operations.</p>
+            </article>
+        </section>
+    </main>
+
+    <footer class="landing-footer" role="contentinfo">
+        <p>&copy; 2026 <strong>MIMS</strong> — School Clinic Medical Information Management System. Built by <strong>12 ICT – THALES</strong>
+    </footer>
+
+    <div id="loginModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="loginModalTitle">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeLoginModal()" aria-label="Close login modal">✕</button>
+            <div class="login-logo">
+                <div class="big-icon" aria-hidden="true">🏥</div>
+                <h2 id="loginModalTitle">Clinic Login</h2>
+                <p>Sign in to access your portal</p>
+            </div>
+
+            <div class="login-tabs" role="tablist" aria-label="Login role">
+                <button class="login-tab active" id="tab-student" onclick="switchTab('student')">Sign In</button>
+                <button class="login-tab" id="tab-signup" onclick="switchTab('signup')">Sign Up</button>
+                <button class="login-tab" id="tab-forgot-password" onclick="switchTab('forgot-password')">Forgot Password</button>
+                <button class="login-tab" id="tab-admin" onclick="switchTab('admin')">Admin</button>
+            </div>
+
+            <form id="login-form" onsubmit="handleLogin(event)" novalidate>
+                <input type="hidden" id="loginRole" value="student">
+                <div class="form-group">
+                    <label for="loginUsername">Username / LRN</label>
+                    <input type="text" id="loginUsername" placeholder="Enter your LRN or username" required autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter your password" required autocomplete="current-password">
+                </div>
+                <p id="loginError" style="color: #D62839; font-size:0.85rem; margin-bottom:12px; display:none;" role="alert"></p>
+                <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">Sign In →</button>
+                <div style="text-align: center; margin-top: 12px;">
+                    <a href="#" id="forgotPasswordLink" onclick="switchTab('forgot-password'); return false;" style="font-size: 0.85rem; color: #2E86AB; text-decoration: none; cursor: pointer;">Forgot Password?</a>
+                </div>
+            </form>
+
+            <form id="signup-form" class="hidden" onsubmit="handleSignup(event)" novalidate>
+                <div class="form-group">
+                    <label for="signupLrn">LRN (12 digits) *</label>
+                    <input type="text" id="signupLrn" placeholder="136889131114" maxlength="12" pattern="\d{12}" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password *</label>
+                    <input type="password" id="signupPassword" placeholder="At least 6 characters" required minlength="6">
+                </div>
+                <div class="form-group">
+                    <label for="signupConfirm">Confirm Password *</label>
+                    <input type="password" id="signupConfirm" required>
+                </div>
+                <p id="signupError" style="color: #D62839; font-size:0.85rem; margin-bottom:12px; display:none;" role="alert"></p>
+                <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">Create Account →</button>
+            </form>
+
+            <form id="forgot-password-form" class="hidden" onsubmit="handleForgotPassword(event)" novalidate>
+                <div class="form-group">
+                    <label for="forgotPasswordLrn">Enter Your LRN</label>
+                    <input type="text" id="forgotPasswordLrn" placeholder="Enter your 12-digit LRN" maxlength="12" pattern="\d{12}" required>
+                </div>
+                <p id="forgotPasswordError" style="color: #D62839; font-size:0.85rem; margin-bottom:12px; display:none;" role="alert"></p>
+                <p id="forgotPasswordSuccess" style="color: #2E86AB; font-size:0.85rem; margin-bottom:12px; display:none;" role="status"></p>
+                <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">Send Reset Link →</button>
+                <div style="text-align: center; margin-top: 12px;">
+                    <a href="#" onclick="switchTab('student'); return false;" style="font-size: 0.85rem; color: #2E86AB; text-decoration: none; cursor: pointer;">Back to Sign In</a>
+                </div>
+            </form>
+
+            <form id="reset-password-form" class="hidden" onsubmit="handleResetPassword(event)" novalidate>
+                <div class="form-group">
+                    <label for="resetPasswordNew">New Password</label>
+                    <input type="password" id="resetPasswordNew" placeholder="At least 6 characters" required minlength="6">
+                </div>
+                <div class="form-group">
+                    <label for="resetPasswordConfirm">Confirm Password</label>
+                    <input type="password" id="resetPasswordConfirm" placeholder="Confirm your new password" required>
+                </div>
+                <p id="resetPasswordError" style="color: #D62839; font-size:0.85rem; margin-bottom:12px; display:none;" role="alert"></p>
+                <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">Reset Password →</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="toast" role="status" aria-live="polite"></div>
+
+    <script src="js/index.js"></script>
+</body>
+</html>

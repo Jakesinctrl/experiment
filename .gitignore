@@ -1,0 +1,15 @@
+.vs/
+*.user
+*.suo
+*.sln.docstates
+
+node_modules/
+npm-debug.log
+yarn-error.log
+
+*.db
+*.db-shm
+*.db-wal
+
+dist/
+build/"node_modules/" 
